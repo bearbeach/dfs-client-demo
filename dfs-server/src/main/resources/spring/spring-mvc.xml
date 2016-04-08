@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-4.0.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd"
+       default-lazy-init="true">
+
+    <!-- 使用annotation 自动注册bean,并保证@Required,@Autowired的属性被注入 -->
+    <context:component-scan base-package="com.baofoo.dfs.server"/>
+
+    <bean id="stringHttpMessageConverter" class="org.springframework.http.converter.StringHttpMessageConverter">
+        <property name="supportedMediaTypes">
+            <list>
+                <value>text/plain;charset=UTF-8</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- 配置需要过滤的静态资源 -->
+    <mvc:default-servlet-handler/>
+    <mvc:annotation-driven/>
+
+    <!-- 配置页面文件后缀名 -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" p:prefix="/pages/" p:suffix=".jsp"/>
+
+    <!-- 全局异常配置 start -->
+    <bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <property name="exceptionMappings">
+            <props>
+                <prop key="java.lang.Exception">/errors/error</prop>
+                <prop key="java.lang.Throwable">/errors/err</prop>
+            </props>
+        </property>
+        <property name="statusCodes">
+            <props>
+                <prop key="pages/500">500</prop>
+                <prop key="pages/404">404</prop>
+            </props>
+        </property>
+        <!-- 设置日志输出级别，不定义则默认不输出警告等错误日志信息 -->
+        <property name="warnLogCategory" value="WARN"/>
+        <!-- 默认错误页面，当找不到上面mappings中指定的异常对应视图时，使用本默认配置 -->
+        <property name="defaultErrorView" value="errors/error"/>
+        <!-- 默认HTTP状态码 -->
+        <property name="defaultStatusCode" value="500"/>
+    </bean>
+
+</beans>

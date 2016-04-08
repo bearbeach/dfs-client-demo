@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baofoo.dfs.server.dal.mapper.DfsNormalFileMapper" >
+
+  <resultMap id="BaseResultMap" type="com.baofoo.dfs.server.dal.model.DFSNormalFileDO" >
+    <id     column="id"         property="id"         jdbcType="VARCHAR" />
+    <result column="org_code"   property="orgCode"    jdbcType="VARCHAR" />
+    <result column="file_name"  property="fileName"   jdbcType="VARCHAR" />
+    <result column="file_group" property="fileGroup"  jdbcType="VARCHAR" />
+    <result column="file_date"  property="fileDate"   jdbcType="VARCHAR" />
+    <result column="dfs_path"   property="dfsPath"    jdbcType="VARCHAR" />
+    <result column="dfs_group"  property="dfsGroup"   jdbcType="VARCHAR" />
+    <result column="created_by" property="createdBy"  jdbcType="VARCHAR" />
+    <result column="created_at" property="createdAt"  jdbcType="TIMESTAMP" />
+    <result column="updated_by" property="updatedBy"  jdbcType="VARCHAR" />
+    <result column="updated_at" property="updatedAt"  jdbcType="TIMESTAMP" />
+    <result column="remark"     property="remark"     jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id,
+    org_code,
+    file_name,
+    file_group,
+    file_date,
+    dfs_path,
+    dfs_group,
+    created_by,
+    created_at,
+    updated_by,
+    updated_at,
+    remark
+  </sql>
+
+  <!-- 根据主键ID查询DFS文件 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    /** 根据主键ID查询DFS文件 */
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM
+        DFS_NOMAL_FILE
+    WHERE
+        id = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <!-- 根据文件名等查询DFS文件 -->
+  <select id="selectByFileName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    /** 根据文件名等查询DFS文件 */
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM
+        DFS_NOMAL_FILE
+    WHERE
+        file_name = #{fileName,jdbcType=VARCHAR}
+    AND
+        org_code = #{orgCode,jdbcType=VARCHAR}
+    AND
+        file_date = #{fileDate,jdbcType=VARCHAR}
+  </select>
+
+  <!-- 根据主键ID删除DFS文件 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    /** 根据主键ID删除DFS文件 */
+    DELETE
+    FROM
+        DFS_NOMAL_FILE
+    WHERE
+        id = #{id,jdbcType=VARCHAR}
+  </delete>
+
+  <!-- 新增DFS临时文件 -->
+  <insert id="insert" keyProperty="id" parameterType="com.baofoo.dfs.server.dal.model.DFSNormalFileDO" >
+    /** 新增DFS文件 */
+    INSERT INTO
+      DFS_NOMAL_FILE (
+        id,
+        org_code,
+        file_name,
+        file_group,
+        file_date,
+        dfs_path,
+        dfs_group,
+        created_by,
+        created_at,
+        updated_by,
+        updated_at,
+        remark
+    ) VALUES (
+        #{id,jdbcType=VARCHAR},
+        #{orgCode,jdbcType=VARCHAR},
+        #{fileName,jdbcType=VARCHAR},
+        #{fileGroup,jdbcType=VARCHAR},
+        #{fileDate,jdbcType=VARCHAR},
+        #{dfsPath,jdbcType=VARCHAR},
+        #{dfsGroup,jdbcType=VARCHAR},
+        #{createdBy,jdbcType=VARCHAR},
+        NOW(),
+        #{updatedBy,jdbcType=VARCHAR},
+        NOW(),
+        #{remark,jdbcType=VARCHAR}
+    )
+    <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+      SELECT LAST_INSERT_ID() AS id
+    </selectKey>
+  </insert>
+
+  <!-- 修改DFS文件 -->
+  <update id="update" parameterType="com.baofoo.dfs.server.dal.model.DFSNormalFileDO" >
+    /** 修改DFS文件 */
+    UPDATE
+        DFS_NOMAL_FILE
+    <set >
+      updated_at = NOW()
+      <if test="orgCode != null and orgCode != ''" >
+        ,org_code = #{orgCode,jdbcType=VARCHAR}
+      </if>
+      <if test="fileName != null and fileName != ''" >
+        ,file_name = #{fileName,jdbcType=VARCHAR}
+      </if>
+      <if test="fileGroup != null and fileGroup != ''" >
+        ,file_group = #{fileGroup,jdbcType=VARCHAR}
+      </if>
+      <if test="fileDate != null and fileDate != ''" >
+        ,file_date = #{fileDate,jdbcType=VARCHAR}
+      </if>
+      <if test="dfsPath != null and dfsPath != ''" >
+        ,dfs_path = #{dfsPath,jdbcType=VARCHAR}
+      </if>
+      <if test="dfsGroup != null and dfsGroup != ''" >
+        ,dfs_group = #{dfsGroup,jdbcType=VARCHAR}
+      </if>
+      <if test="updatedBy != null and updatedBy != ''" >
+        ,updated_by = #{updatedBy,jdbcType=VARCHAR}
+      </if>
+      <if test="remark != null and remark != ''" >
+        ,remark = #{remark,jdbcType=VARCHAR}
+      </if>
+    </set>
+    WHERE
+        id = #{id,jdbcType=VARCHAR}
+  </update>
+
+</mapper>

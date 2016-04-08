@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema xmlns="http://www.baofoo.com/schema/tags"
+			xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+			xmlns:beans="http://www.springframework.org/schema/beans"
+			targetNamespace="http://www.baofoo.com/schema/tags">
+
+	<xsd:import namespace="http://www.springframework.org/schema/beans" schemaLocation="http://www.springframework.org/schema/beans/spring-beans-4.1.xsd"/>
+	<xsd:import namespace="http://www.springframework.org/schema/tool" schemaLocation="http://www.springframework.org/schema/tool/spring-tool-4.1.xsd"/>
+
+	<xsd:element name="dfs">
+		<xsd:annotation>
+			<xsd:documentation>
+				<![CDATA[ 宝付DFS，封装FastDFS，实现文件信息记录、上传、下载、删除、定时删除等功能 ]]>
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="beans:identifiedType">
+					<xsd:attribute name="host" type="xsd:string" use="required">
+						<xsd:annotation>
+							<xsd:documentation>
+								<![CDATA[ DFS Server API 服务地址，多个请用英文逗号隔开 ]]>
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+					<xsd:attribute name="port" type="xsd:int" use="required">
+						<xsd:annotation>
+							<xsd:documentation>
+								<![CDATA[ DFS Server API 服务端口 ]]>
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+					<xsd:attribute name="trackers" type="xsd:string" use="required">
+						<xsd:annotation>
+							<xsd:documentation>
+								<![CDATA[ DFS Tracker Server 多个请用英文逗号隔开 ]]>
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+					<xsd:attribute name="connectTimeout" type="xsd:int" use="optional" default="30000">
+						<xsd:annotation>
+							<xsd:documentation>
+								<![CDATA[ DFS Server 连接超时时间，单位毫秒，默认30000 ]]>
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+					<xsd:attribute name="networkConnectTimeout" type="xsd:int" use="optional" default="30000">
+						<xsd:annotation>
+							<xsd:documentation>
+								<![CDATA[ DFS Server 网络连接超时时间，单位毫秒，默认30000 ]]>
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+					<xsd:attribute name="trackerHttpPort" type="xsd:int" use="optional" default="8080">
+						<xsd:annotation>
+							<xsd:documentation>
+								<![CDATA[ DFS Tracker Server HTTP 端口，默认8080 ]]>
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+					<xsd:attribute name="secretKey" type="xsd:string" use="optional" default="1qazXsw28080">
+						<xsd:annotation>
+							<xsd:documentation>
+								<![CDATA[ DFS 密钥，默认 1qazXsw28080 ]]>
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+					<xsd:attribute name="maxIdle" type="xsd:int" use="optional" default="50">
+						<xsd:annotation>
+							<xsd:documentation>
+								<![CDATA[ DFS 最大连接数，默认50 ]]>
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+					<xsd:attribute name="minIdle" type="xsd:int" use="optional" default="1">
+						<xsd:annotation>
+							<xsd:documentation>
+								<![CDATA[ DFS 最小连接数，默认1 ]]>
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+					<xsd:attribute name="maxTotal" type="xsd:int" use="optional" default="50">
+						<xsd:annotation>
+							<xsd:documentation>
+								<![CDATA[ DFS 总连接数，默认50 ]]>
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+
+</xsd:schema>

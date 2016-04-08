@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF8"?>
+<configuration>
+
+    <!-- 管控台日志打印，发布生产需注释 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder charset="utf-8"> <!-- encoder 可以指定字符集，对于中文输出有意义 -->
+            <!-- %.-1level 只显示信息级别的首字母,%-5level 左对齐显示信息级别全称 -->
+            <!-- 如需自定义关键字，用 %mdc{键名} 表示,程序中用MDC.put("键名","键值")设置，可动态设置 [%logger:%line]-->
+            <Pattern>[%date{yyyy-MM-dd HH:mm:ss:S}] [%-5level] %logger %line --%mdc{client} [%X{TRACE_LOG_ID}] %msg%n</Pattern>
+        </encoder>>
+    </appender>
+
+    <!-- 系统日志打印 -->
+    <appender name="logfile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${logger.logRoot}/dfs-core/server/server.log</File>
+        <encoder>
+            <Pattern>[%date{yyyy-MM-dd HH:mm:ss:S}] [%-5level] %logger %line --%mdc{client} [%X{TRACE_LOG_ID}] %msg%n</Pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logger.logRoot}/dfs-core/server/server-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <TimeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>512MB</maxFileSize>
+            </TimeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+    </appender>
+
+    <!-- 外部jar包 日志级别设置 -->
+    <logger level="${logger.lib.logLevel}" name="com.mchange" />
+    <logger level="${logger.lib.logLevel}" name="com.baofoo.ps.log" />
+    <logger level="${logger.lib.logLevel}" name="com.ibatis" />
+    <logger level="${logger.lib.logLevel}" name="org.mybatis" />
+    <logger level="${logger.lib.logLevel}" name="org.springframework"/>
+    <logger level="${logger.lib.logLevel}" name="java.sql"/>
+    <logger level="${logger.lib.logLevel}" name="org.apache"/>
+    <logger level="${logger.lib.logLevel}" name="com.alibaba"/>
+    <logger level="${logger.lib.logLevel}" name="org.I0Itec"/>
+    <logger level="${logger.lib.logLevel}" name="org.dozer"/>
+    <logger level="${logger.lib.logLevel}" name="org.jdbcdslog"/>
+    <logger level="${logger.lib.logLevel}" name="java.sql.SQLException"/>
+    <logger level="${logger.lib.logLevel}" name="org.jdbcdslog.StatementLogger"/>
+    <logger level="${logger.lib.logLevel}" name="org.springframework.dao.CannotAcquireLockException"/>
+
+    <!-- 线上日志输出到文件 -->
+    <root level="${logger.logLevel}" name="com.baofoo.message.mns">
+        <appender-ref ref="logfile"/>
+    </root>
+
+    <!-- 输出到控制台和文件，可定义更多的 Appender -->
+    <root level="${logger.logLevel}" name="com.baofoo.message.mns">
+        <appender-ref ref="STDOUT"/>
+    </root>
+</configuration>
