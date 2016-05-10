@@ -31,6 +31,9 @@ public class DfsServer {
     @Autowired
     private DfsFileManager dfsFileManager;
 
+    @Autowired
+    private ServerRegistry serverRegistry;
+
     /**
      * 启动DFS socket 服务
      *
@@ -41,6 +44,8 @@ public class DfsServer {
         log.info("socket server:{} starting ",_dfs_server_port);
 
         ServerSocket server = new ServerSocket(_dfs_server_port);
+
+        serverRegistry.registry();
 
         while (true) {
 

@@ -12,7 +12,6 @@ import java.io.OutputStream;
  *
  * @author 牧之
  * @version 1.0.0 createTime: 2015/11/27
- * @since 1.7
  */
 public class StreamUtil {
 

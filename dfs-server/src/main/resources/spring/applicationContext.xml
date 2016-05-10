@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:baofoo="http://www.baofoo.com/schema/tags"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:task="http://www.springframework.org/schema/task"
-       xmlns:baofoo="http://www.baofoo.com/schema/tags"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 	   http://www.springframework.org/schema/beans/spring-beans.xsd
-	   http://www.baofoo.com/schema/tags
-	   http://www.baofoo.com/schema/tags/dfs-1.0.0.xsd
 	   http://www.springframework.org/schema/task
        http://www.springframework.org/schema/task/spring-task-3.1.xsd
 	   http://www.springframework.org/schema/tx
        http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+       http://www.baofoo.com/schema/tags
+       http://www.baofoo.com/schema/tags/dfs-1.1.0.xsd
 	   http://www.springframework.org/schema/context
 	   http://www.springframework.org/schema/context/spring-context-4.1.xsd">
 
@@ -37,6 +37,8 @@
 
     <import resource="spring-mvc.xml"/>
 
-    <baofoo:dfs host="127.0.0.1" port="9090" trackers="10.0.21.130:22122" secretKey="1qazXsw28080"/>
+    <!-- zookeeper 服务注册地址，trakers 为DFS tracker server地址，多个用英文逗号隔开，
+      secretKey为生成下载地址的加密token，不同的fastDFS集群配置不尽相同  -->
+    <baofoo:dfs zookeeper="10.0.20.175:2181" trackers="10.0.21.130:22122" secretKey="1qazXsw28080"/>
 
 </beans>

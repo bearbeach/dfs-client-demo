@@ -10,7 +10,6 @@ import java.util.Date;
  *
  * @author 牧之
  * @version 1.0.0 createTime: 2015/11/30
- * @since 1.7
  */
 public class DateUtil {
 

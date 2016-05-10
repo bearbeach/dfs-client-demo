@@ -9,7 +9,6 @@ import java.io.IOException;
  *
  * @author 牧之
  * @version 1.0.0 createTime: 2015/11/30
- * @since 1.7
  */
 @Slf4j
 @AllArgsConstructor
@@ -26,7 +25,7 @@ public class ServerThread extends Thread{
 
         } catch (IOException e) {
             log.error("DFS Server start exception ,System exit.{},{}",e.getMessage(),e);
-            System.exit(1);
+            System.exit(0);
         }
     }
 }

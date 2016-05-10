@@ -5,7 +5,6 @@ package com.baofoo.dfs.client.enums;
  *
  * @author 牧之
  * @version 1.0.0 createTime: 2015/11/30
- * @since 1.7
  */
 public enum FileGroup {
 

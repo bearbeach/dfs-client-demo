@@ -15,6 +15,7 @@
     <result column="updated_by" property="updatedBy"  jdbcType="VARCHAR" />
     <result column="updated_at" property="updatedAt"  jdbcType="TIMESTAMP" />
     <result column="remark"     property="remark"     jdbcType="VARCHAR" />
+    <result column="file_size"  property="fileSize"   jdbcType="BIGINT" />
   </resultMap>
 
   <sql id="Base_Column_List" >
@@ -29,7 +30,8 @@
     created_at,
     updated_by,
     updated_at,
-    remark
+    remark,
+    file_size
   </sql>
 
   <!-- 根据主键ID查询DFS文件 -->
@@ -40,7 +42,7 @@
     FROM
         DFS_NOMAL_FILE
     WHERE
-        id = #{id,jdbcType=VARCHAR}
+        id = #{id,jdbcType=BIGINT}
   </select>
 
   <!-- 根据文件名等查询DFS文件 -->
@@ -65,7 +67,7 @@
     FROM
         DFS_NOMAL_FILE
     WHERE
-        id = #{id,jdbcType=VARCHAR}
+        id = #{id,jdbcType=BIGINT}
   </delete>
 
   <!-- 新增DFS临时文件 -->
@@ -73,7 +75,6 @@
     /** 新增DFS文件 */
     INSERT INTO
       DFS_NOMAL_FILE (
-        id,
         org_code,
         file_name,
         file_group,
@@ -84,9 +85,9 @@
         created_at,
         updated_by,
         updated_at,
-        remark
+        remark,
+        file_size
     ) VALUES (
-        #{id,jdbcType=VARCHAR},
         #{orgCode,jdbcType=VARCHAR},
         #{fileName,jdbcType=VARCHAR},
         #{fileGroup,jdbcType=VARCHAR},
@@ -97,7 +98,8 @@
         NOW(),
         #{updatedBy,jdbcType=VARCHAR},
         NOW(),
-        #{remark,jdbcType=VARCHAR}
+        #{remark,jdbcType=VARCHAR},
+        #{fileSize,jdbcType=BIGINT}
     )
     <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
       SELECT LAST_INSERT_ID() AS id
@@ -137,7 +139,7 @@
       </if>
     </set>
     WHERE
-        id = #{id,jdbcType=VARCHAR}
+        id = #{id,jdbcType=BIGINT}
   </update>
 
 </mapper>

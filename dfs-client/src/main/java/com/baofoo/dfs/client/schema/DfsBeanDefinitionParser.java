@@ -17,7 +17,6 @@ import org.w3c.dom.Element;
  * @author 牧之
  * @version 1.0.0 createTime: 2015/11/30
  * @since spring 4.x
- * @since jdk 1.7
  */
 public class DfsBeanDefinitionParser implements BeanDefinitionParser{
 
@@ -30,9 +29,8 @@ public class DfsBeanDefinitionParser implements BeanDefinitionParser{
         log.info("DFS 开始解析Spring 配置文件，初始化配置。");
         RootBeanDefinition beanDefinition = new RootBeanDefinition();
 
-        String host = element.getAttribute("host");
-        int port = Integer.valueOf(element.getAttribute("port"));
         String trackers = element.getAttribute("trackers");
+        String zookeeper = element.getAttribute("zookeeper");
 
         int connectTimeout = Integer.valueOf(element.getAttribute("connectTimeout"));
         if(connectTimeout == 0){
@@ -69,8 +67,7 @@ public class DfsBeanDefinitionParser implements BeanDefinitionParser{
             maxIdle = 50;
         }
 
-        DfsConfig.set_server_host(host);
-        DfsConfig.set_server_port(port);
+        DfsConfig.set_zookeeper_address(zookeeper);
         DfsConfig.set_tracker_adds(trackers);
         DfsConfig.set_tracker_http_port(trackerHttpPort);
         DfsConfig.set_min_idle(minIdle);
@@ -80,12 +77,11 @@ public class DfsBeanDefinitionParser implements BeanDefinitionParser{
         DfsConfig.set_network_timeout(networkConnectTimeout);
         DfsConfig.set_secret_key(secretKey);
 
-        log.info("初始化DFS host:{},port:{},trackers:{}",host,port,trackers);
+        log.info("初始化DFS ,trackers:{}",trackers);
 
         FastDFSUtil.init();
 
-        beanDefinition.getPropertyValues().addPropertyValue("host", host);
-        beanDefinition.getPropertyValues().addPropertyValue("port", port);
+        beanDefinition.getPropertyValues().addPropertyValue("zookeeper", zookeeper);
         beanDefinition.getPropertyValues().addPropertyValue("trackers", trackers);
         beanDefinition.getPropertyValues().addPropertyValue("trackerHttpPort", trackerHttpPort);
         beanDefinition.getPropertyValues().addPropertyValue("minIdle", minIdle);

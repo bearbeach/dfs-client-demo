@@ -19,7 +19,6 @@ import java.net.Socket;
  *
  * @author 牧之
  * @version 1.0.0 createTime: 2015/11/30
- * @since 1.7
  */
 @Slf4j
 @AllArgsConstructor
@@ -50,13 +49,13 @@ public class DfsHandler implements Runnable {
             switch (command.getOperation()){
                 case INSERT:
                     response.setResult(insert(command));
-                    break;
+                    return;
                 case UPDATE:
                     response.setResult(update(command));
-                    break;
+                    return;
                 case QUERY:
                     response.setResult(query(command));
-                    break;
+                    return;
                 case DELETE:
                     response.setResult(delete(command));
                     break;

@@ -5,16 +5,12 @@ package com.baofoo.dfs.client.core;
  *
  * @author 牧之
  * @version 1.0.0 createTime: 2015/11/27
- * @since 1.7
  */
 
 public class DfsConfig {
 
-    /** 服务端地址 */
-    private static String _server_host;
-
-    /** 服务端端口 */
-    private static int    _server_port;
+    /** zookeeper 服务地址 */
+    private static String _zookeeper_address;
 
     /** 服务连接超时时间 */
     private static int    _connect_timeout;
@@ -39,6 +35,9 @@ public class DfsConfig {
 
     /** DFS 总连接数 */
     private static int _max_total;
+
+    /** DFS 临时文件目录 */
+    private static String _upload_temp_dir;
 
     /** 字符集编码 */
     public final static String _input_charset = "UTF-8";
@@ -67,14 +66,6 @@ public class DfsConfig {
         DfsConfig._secret_key = _secret_key;
     }
 
-    public static void set_server_host(String _server_host) {
-        DfsConfig._server_host = _server_host;
-    }
-
-    public static void set_server_port(int _server_port) {
-        DfsConfig._server_port = _server_port;
-    }
-
     public static void set_tracker_adds(String _tracker_adds) {
         DfsConfig._tracker_adds = _tracker_adds;
     }
@@ -85,10 +76,6 @@ public class DfsConfig {
 
     public static int get_connect_timeout() {
         return _connect_timeout;
-    }
-
-    public static int get_server_port() {
-        return _server_port;
     }
 
     public static int get_max_idle() {
@@ -115,12 +102,23 @@ public class DfsConfig {
         return _secret_key;
     }
 
-    public static String get_server_host() {
-       return _server_host;
-    }
-
     public static String get_tracker_adds() {
         return _tracker_adds;
     }
 
+    public static String get_zookeeper_address() {
+        return DfsConfig._zookeeper_address;
+    }
+
+    public static void set_zookeeper_address(String _zookeeper_address) {
+        DfsConfig._zookeeper_address = _zookeeper_address;
+    }
+
+    public static String get_upload_temp_dir() {
+        return _upload_temp_dir;
+    }
+
+    public static void set_upload_temp_dir(String _upload_temp_dir) {
+        DfsConfig._upload_temp_dir = _upload_temp_dir;
+    }
 }

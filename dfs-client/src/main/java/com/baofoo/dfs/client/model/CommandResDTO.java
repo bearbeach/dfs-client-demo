@@ -9,7 +9,6 @@ import java.io.Serializable;
  *
  * @author 牧之
  * @version 1.0.0 createTime: 2015/12/2
- * @since 1.7
  */
 public class CommandResDTO implements Serializable {
 
@@ -17,6 +16,9 @@ public class CommandResDTO implements Serializable {
 
     /** 文件ID */
     private Long fileId;
+
+    /** 文件ID */
+    private Long fileSize;
 
     /** 文件名称 */
     private String fileName;
@@ -82,4 +84,11 @@ public class CommandResDTO implements Serializable {
                 .toString();
     }
 
+    public Long getFileSize() {
+        return fileSize;
+    }
+
+    public void setFileSize(Long fileSize) {
+        this.fileSize = fileSize;
+    }
 }

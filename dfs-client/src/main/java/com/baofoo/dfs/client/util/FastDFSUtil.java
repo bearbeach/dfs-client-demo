@@ -25,7 +25,6 @@ import java.util.concurrent.LinkedBlockingQueue;
  *
  * @author muzhi
  * @version 1.0.0 createTime: 15/11/25 下午13:02
- * @since 1.7
  */
 public class FastDFSUtil {
 
@@ -38,7 +37,7 @@ public class FastDFSUtil {
     public static final String KEY_REMOTE_FILE_NAME = "REMOTE_FILE_NAME";
 
     /** 有界阻塞队列 */
-    public static BlockingQueue<String> connectQueue;
+    public static BlockingQueue<String> connectQueue = new LinkedBlockingQueue<String>(20);
 
     private static String [] trackerAddress;
 
@@ -290,6 +289,7 @@ public class FastDFSUtil {
             for(String tracker : trackers){
                 String host = tracker.split(":")[0];
                 trackerAddress[position] = host;
+                position ++;
             }
         }
 

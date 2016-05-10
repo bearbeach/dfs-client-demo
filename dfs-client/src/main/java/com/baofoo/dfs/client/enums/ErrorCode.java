@@ -5,12 +5,14 @@ package com.baofoo.dfs.client.enums;
  *
  * @author 牧之
  * @version 1.0.0 createTime: 2015/11/26
- * @since 1.7
  */
 public enum ErrorCode {
 
     /** 请求参数为空 */
     EMPTY_PARAM("EMPTY_PARAM","请求参数为空"),
+
+    /** 文件不存在 */
+    FILE_NOT_EXITED("FILE_NOT_EXITED","文件不存在"),
 
     /** 文件已存在 */
     FILE_EXITED("FILE_EXITED","文件已存在"),
@@ -41,6 +43,9 @@ public enum ErrorCode {
 
     /** 参数校验错误 */
     INVALID_PARAM("INVALID_PARAM","参数校验错误"),
+
+    /** 找不到服务提供者 */
+    NO_SERVER_PROVIDER("NO_SERVER_PROVIDER","找不到服务提供者"),
 
     /** 系统错误 */
     SYSTEM_ERROR("SYSTEM_ERROR","系统错误");

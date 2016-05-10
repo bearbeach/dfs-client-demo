@@ -34,6 +34,9 @@ public class DFSFileDO extends BaseDO {
     /** 在DFS的文件全路径 */
     private String dfsPath;
 
+    /** 文件大小 */
+    private long fileSize;
+
     /** 在DFS的文件组 */
     private String dfsGroup;
 

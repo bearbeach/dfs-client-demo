@@ -42,6 +42,7 @@ public class DfsFileManager {
         try{
             if(insertReqDTO.getDeadline() == null){
                 DFSNormalFileDO normalFileDO = new DFSNormalFileDO();
+                normalFileDO.setFileSize(insertReqDTO.getFileSize());
                 normalFileDO.setOrgCode(insertReqDTO.getOrgCode());
                 normalFileDO.setFileName(insertReqDTO.getFileName());
                 normalFileDO.setRemark(insertReqDTO.getRemark());
@@ -57,6 +58,7 @@ public class DfsFileManager {
 
 
             DFSTempFileDO tempFileDO = new DFSTempFileDO();
+            tempFileDO.setFileSize(insertReqDTO.getFileSize());
             tempFileDO.setOrgCode(insertReqDTO.getOrgCode());
             tempFileDO.setFileName(insertReqDTO.getFileName());
             tempFileDO.setRemark(insertReqDTO.getRemark());
@@ -115,11 +117,6 @@ public class DfsFileManager {
      * @return          DFS文件记录信息
      */
     public CommandResDTO queryFileInfo(QueryReqDTO command){
-
-        if(Operation.QUERY.equals(command.getOperation())){
-
-        }
-
         if(null != command.getFileId()){
             return queryByFileId(command.getFileId());
         }
@@ -140,6 +137,7 @@ public class DfsFileManager {
             commandResDTO.setFileName(normalFileDO.getFileName());
             commandResDTO.setDfsGroup(normalFileDO.getDfsGroup());
             commandResDTO.setFileId(normalFileDO.getId());
+            commandResDTO.setFileSize(normalFileDO.getFileSize());
             return commandResDTO;
         }
 
@@ -149,6 +147,7 @@ public class DfsFileManager {
             commandResDTO.setFileName(tempFileDO.getFileName());
             commandResDTO.setDfsGroup(tempFileDO.getDfsGroup());
             commandResDTO.setFileId(tempFileDO.getId());
+            commandResDTO.setFileSize(tempFileDO.getFileSize());
             return commandResDTO;
         }
 

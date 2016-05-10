@@ -7,7 +7,7 @@
 
     <groupId>com.baofoo</groupId>
     <artifactId>dfs-core</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.1.1-SNAPSHOT</version>
 
     <packaging>pom</packaging>
     <name>DFS Core Parent</name>
@@ -29,6 +29,7 @@
         <log4j.version>1.2.17</log4j.version>
         <logback.version>1.1.2</logback.version>
         <slf4j.version>1.7.9</slf4j.version>
+        <zookeeper.version>3.4.6</zookeeper.version>
         <bafoocommons.version>1.0-SNAPSHOT</bafoocommons.version>
         <maven-compiler-plugin>3.1</maven-compiler-plugin>
         <maven-dependency-plugin>2.8</maven-dependency-plugin>
@@ -50,12 +51,12 @@
             <dependency>
                 <groupId>com.baofoo</groupId>
                 <artifactId>dfs-client</artifactId>
-                <version>1.0.0-SNAPSHOT</version>
+                <version>1.1.0-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.baofoo</groupId>
                 <artifactId>dfs-server</artifactId>
-                <version>1.0.0-SNAPSHOT</version>
+                <version>1.1.0-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>joda-time</groupId>
@@ -245,6 +246,21 @@
                 <artifactId>logback-core</artifactId>
                 <version>${logback-core.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.apache.zookeeper</groupId>
+                <artifactId>zookeeper</artifactId>
+                <version>${zookeeper.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-log4j12</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>log4j</groupId>
+                        <artifactId>log4j</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
         </dependencies>
 
     </dependencyManagement>
@@ -275,6 +291,21 @@
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-core</artifactId>
             <version>${logback-core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.zookeeper</groupId>
+            <artifactId>zookeeper</artifactId>
+            <version>${zookeeper.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-log4j12</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>log4j</groupId>
+                    <artifactId>log4j</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 

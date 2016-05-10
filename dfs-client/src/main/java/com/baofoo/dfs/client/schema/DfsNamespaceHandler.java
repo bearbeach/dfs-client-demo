@@ -8,7 +8,6 @@ import org.springframework.beans.factory.xml.NamespaceHandlerSupport;
  * @author 牧之
  * @version 1.0.0 createTime: 2015/11/30
  * @since spring 4.x
- * @since jdk 1.7
  */
 public class DfsNamespaceHandler extends NamespaceHandlerSupport {
 

@@ -9,24 +9,23 @@ import com.baofoo.dfs.client.enums.Operation;
 import com.baofoo.dfs.client.model.*;
 import com.baofoo.dfs.client.util.DateUtil;
 import com.baofoo.dfs.client.util.FastDFSUtil;
+import com.baofoo.dfs.client.util.FileUtil;
 import com.baofoo.dfs.client.util.SocketUtil;
 import org.apache.commons.lang3.StringUtils;
-import org.csource.fastdfs.UploadCallback;
-import org.csource.fastdfs.UploadStream;
+import org.apache.zookeeper.KeeperException;
+import org.apache.zookeeper.ZooKeeper;
+import org.apache.zookeeper.data.Stat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.io.*;
 import java.util.Date;
 import java.util.Map;
-import java.util.UUID;
 
 /**
  * DFS Socket Client（为规范使用，此类将被结扎）
  *
  * @author 牧之
  * @version 1.0.0 createTime: 2015/11/27
- * @since 1.7
  */
 public final class DfsClient {
 
@@ -55,7 +54,6 @@ public final class DfsClient {
         reqDTO.setOperation(Operation.QUERY);
 
         try{
-
 
             //第一步、根据文件记录ID获取DFS文件存放信息
             Response response = SocketUtil.sendMessage(reqDTO);
@@ -126,11 +124,9 @@ public final class DfsClient {
         if(StringUtils.isBlank(insertReqDTO.getFileName())){
             throw new DfsException(ErrorCode.EMPTY_PARAM,"文件名称不能为空");
         }
-
         if(null == insertReqDTO.getFileGroup()){
             throw new DfsException(ErrorCode.EMPTY_PARAM,"源文件组不能为空");
         }
-
         if(StringUtils.isBlank(insertReqDTO.getFileDate())){
             throw new DfsException(ErrorCode.EMPTY_PARAM,"源文件日期不能为空");
         }
@@ -145,6 +141,12 @@ public final class DfsClient {
 
         try{
 
+            File file = new File(insertReqDTO.getFilePath());
+            if(!file.exists()){
+                throw new DfsException(ErrorCode.FILE_NOT_EXITED);
+            }
+
+            insertReqDTO.setFileSize(file.length());
             FastDFSUtil.putQueue(insertReqDTO.getFilePath());
 
             // 第一步、新增DFS文件记录信息（重复校验）
@@ -224,52 +226,20 @@ public final class DfsClient {
 
         try{
 
-            if(insertReqDTO.getFileGroup().getDay()>0){
-                insertReqDTO.setDeadline(DateUtil.computeDate(new Date(), insertReqDTO.getFileGroup().getDay()));
-            }
-            insertReqDTO.setOperation(Operation.INSERT);
+            String folder = DfsConfig.get_upload_temp_dir();
 
-            FastDFSUtil.putQueue(insertReqDTO.getOrgCode());
-
-            // 第一步、新增DFS文件记录信息（重复校验）
-            Response response = SocketUtil.sendMessage(insertReqDTO);
-
-            if(!response.isSuccess()){
-                throw new DfsException(ErrorCode.SAVE_UPLOAD_INFO_ERROR,response.getErrorMsg());
+            if(StringUtils.isBlank(folder)){
+               folder = System.getProperty("java.io.tmpdir");
             }
 
-            UploadCallback uploadCallback = new UploadStream(in,insertReqDTO.getFileSize());
+            File uploadFile = new File(folder + File.separator + insertReqDTO.getFileName());
 
-            // 第二步、上传DFS文件
-            Map<String, String> resultMap = FastDFSUtil.upload(null,insertReqDTO.getFileSize(),uploadCallback,
-                    insertReqDTO.getFileName(),null);
-            if(null == resultMap){
-                throw new DfsException(ErrorCode.UPLOAD_FAILURE,"文件上传失败");
-            }
+            FileUtil.inputstreamtofile(in,uploadFile);
 
-            UpdateReqDTO updateReqDTO = new UpdateReqDTO();
-            Long fileId = (Long)response.getResult();
-            String dfsGroup = resultMap.get(FastDFSUtil.KEY_GROUP);
-            String dfsPath = resultMap.get(FastDFSUtil.KEY_REMOTE_FILE_NAME);
-            updateReqDTO.setDfsGroup(dfsGroup);
-            updateReqDTO.setDfsPath(dfsPath);
-            updateReqDTO.setFileId(fileId);
-            updateReqDTO.setOperation(Operation.UPDATE);
-            updateReqDTO.setDeadline(insertReqDTO.getDeadline());
+            insertReqDTO.setFileSize(uploadFile.length());
+            insertReqDTO.setFilePath(uploadFile.getAbsolutePath());
 
-            //第三步、更新DFS文件记录信息
-            response = SocketUtil.sendMessage(updateReqDTO);
-
-            if(!response.isSuccess()){
-                throw new DfsException(ErrorCode.SAVE_UPLOAD_INFO_ERROR,response.getErrorMsg());
-            }
-
-            uploadResDTO.setFileId(fileId);
-            uploadResDTO.setDfsGroup(dfsGroup);
-            uploadResDTO.setDfsPath(dfsPath);
-            uploadResDTO.setDownloadUrl(FastDFSUtil.getDownloadUrl(dfsGroup, dfsPath));
-
-            log.debug("文件:{}上传成功，响应结果:{}", insertReqDTO.getFilePath(), uploadResDTO);
+            uploadResDTO = upload(insertReqDTO);
 
         }catch (DfsException e){
             throw e;
@@ -279,9 +249,8 @@ public final class DfsClient {
             try {
                 in.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                log.error(e.getMessage(),e);
             }
-            FastDFSUtil.takeQueue();
         }
 
         return uploadResDTO;
@@ -387,8 +356,9 @@ public final class DfsClient {
      *
      * @param fileId            文件记录ID
      */
-    public static void delete(Long fileId){
-        if(fileId == null){
+    public static void delete(long fileId){
+
+        if(fileId < 1){
             throw new DfsException(ErrorCode.INVALID_PARAM,"文件ID不能为空!");
         }
 
@@ -507,34 +477,29 @@ public final class DfsClient {
 
     }
 
-    public static void main(String args []) throws IOException{
+    public static void main(String args []) throws IOException, KeeperException, InterruptedException {
 
         DfsConfig.set_connect_timeout(1000 * 5);
-        DfsConfig.set_server_host("10.0.21.56");
-        DfsConfig.set_server_port(9090);
-
         DfsConfig.set_secret_key("1qazXsw28080");
-
+        DfsConfig.set_zookeeper_address("10.0.20.175:2181");
         DfsConfig.set_max_idle(50);
         DfsConfig.set_max_total(50);
         DfsConfig.set_min_idle(3);
-        DfsConfig.set_tracker_adds("10.0.21.130:22122");
+        DfsConfig.set_tracker_adds("10.0.21.130:22122,10.0.21.131:22122,10.0.21.132:22122");
         DfsConfig.set_tracker_http_port(8080);
 
         FastDFSUtil.init();
 
         String fileDate = DateUtil.getCurrent();
-        String fileName = UUID.randomUUID().toString();
         String orgCode = DateUtil.getCurrent();
 
-        File file = new File("F:\\fl.gif");
-        InputStream in = new FileInputStream(file);
+        InputStream in = new ByteArrayInputStream("fafasdfasdf".getBytes());
 
         InsertReqDTO insertReqDTO = new InsertReqDTO();
-        insertReqDTO.setFilePath("F:\\bz.jpg");
+        insertReqDTO.setFilePath("F:\\fl.gif");
         insertReqDTO.setOrgCode(orgCode);
-        insertReqDTO.setFileName("fl.gif");
-        insertReqDTO.setFileSize(file.length());
+        insertReqDTO.setFileName("f22l.gif");
+        insertReqDTO.setFileSize(0);
         insertReqDTO.setDeadline(DateUtil.computeDate(new Date(), -1));
         insertReqDTO.setRemark("remark");
         insertReqDTO.setFileGroup(FileGroup.CLEARING);
@@ -542,30 +507,9 @@ public final class DfsClient {
         CommandResDTO commandResDTO = DfsClient.upload(in,insertReqDTO);
         log.debug("upload result =:{}", commandResDTO);
 
-        insertReqDTO.setFileName(fileName);
-
         /*QueryReqDTO queryReqDTO = new QueryReqDTO();
-        queryReqDTO.setFileDate("2015120316094545");
-        queryReqDTO.setFileName("8aa98230-d1b8-4d26-8656-3e4aa161e255");
-        queryReqDTO.setOrgCode("2015120316094550");
-        DfsClient.download(queryReqDTO,"D:");
-
-        QueryReqDTO queryHttpInfo = new QueryReqDTO();
-        queryHttpInfo.setFileDate("2015120316094545");
-        queryHttpInfo.setFileName("8aa98230-d1b8-4d26-8656-3e4aa161e255");
-        queryHttpInfo.setOrgCode("2015120316094550");
-        String downloadUri = DfsClient.getDownloadUri(queryHttpInfo);
-        log.debug("getdownload url result :{}", downloadUri);
-
-        downloadUri = DfsClient.getDownloadUri("group1", "M00/00/00/CgAVg1Zf9l2ASfmzAE_rflFxl1s278.gif");
-
-        log.debug("getdownload url result :{}", downloadUri);
-
-        DfsClient.download("M00/00/00/CgAVg1Zf9l2ASfmzAE_rflFxl1s278.gif","D:\\aaaaa.gif");
-
-        DfsClient.delete(11099L);
-
-        DfsClient.delete(fileName,orgCode,fileDate);*/
+        queryReqDTO.setFileId(50000012L);
+        DfsClient.getDownloadUri(queryReqDTO);*/
 
     }
 

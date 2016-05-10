@@ -1,6 +1,9 @@
 package com.baofoo.dfs.server;
 
+import com.baofoo.dfs.server.scheduled.TempFileProcessor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.zookeeper.ZooKeeper;
+import org.apache.zookeeper.data.Stat;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -14,13 +17,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Slf4j
 public class TestSocket extends BaseTest{
 
-    @Autowired(required = false)
-    private SocketStart socketStart;
+    @Autowired
+    TempFileProcessor tempFileProcessor;
 
     @Test
-    public void starting() throws InterruptedException {
-        socketStart.initData();
-        Thread.sleep(1000*60);
+    public void starting(){
+
+        try{
+            tempFileProcessor.scanFileRecord();
+
+            Thread.sleep(1000 * 60 * 60);
+
+        }catch (Exception e){
+            log.error(e.getMessage(),e);
+        }
+
     }
 
 }

@@ -8,7 +8,6 @@ import java.io.Serializable;
  *
  * @author 牧之
  * @version 1.0.0 createTime: 2015/11/26
- * @since 1.7
  */
 public class CommandDTO implements Serializable{
 

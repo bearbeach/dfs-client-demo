@@ -9,7 +9,6 @@ import java.util.Date;
  *
  * @author 牧之
  * @version 1.0.0 createTime: 2015/12/2
- * @since 1.7
  */
 public class UpdateReqDTO extends CommandDTO {
 

@@ -13,7 +13,6 @@ import org.csource.fastdfs.TrackerServer;
  * @version 1.0.0 createTime: 15/4/20 下午6:46
  * @see org.apache.commons.pool2.BasePooledObjectFactory
  * @see org.apache.commons.pool2.PooledObject
- * @since 1.7
  */
 public class FastDFSFactory extends BasePooledObjectFactory<TrackerServer> {
 
