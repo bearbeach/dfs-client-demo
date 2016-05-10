@@ -7,7 +7,7 @@
 
     <groupId>com.baofoo</groupId>
     <artifactId>dfs-core</artifactId>
-    <version>1.1.1-SNAPSHOT</version>
+    <version>1.2.0</version>
 
     <packaging>pom</packaging>
     <name>DFS Core Parent</name>
@@ -51,12 +51,12 @@
             <dependency>
                 <groupId>com.baofoo</groupId>
                 <artifactId>dfs-client</artifactId>
-                <version>1.1.0-SNAPSHOT</version>
+                <version>1.2.0</version>
             </dependency>
             <dependency>
                 <groupId>com.baofoo</groupId>
                 <artifactId>dfs-server</artifactId>
-                <version>1.1.0-SNAPSHOT</version>
+                <version>1.2.0</version>
             </dependency>
             <dependency>
                 <groupId>joda-time</groupId>

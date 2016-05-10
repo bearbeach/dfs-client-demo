@@ -18,8 +18,12 @@ public class DfsConfig {
     /** DFS tracker 地址列表 */
     private static String _tracker_adds;
 
+
     /** DFS tracker http 端口 */
     private static int _tracker_http_port;
+
+    /** DFS http 服务地址 */
+    private static String _http_server;
 
     /** DFS 密钥 */
     private static String _secret_key ="1qazXsw28080";
@@ -120,5 +124,13 @@ public class DfsConfig {
 
     public static void set_upload_temp_dir(String _upload_temp_dir) {
         DfsConfig._upload_temp_dir = _upload_temp_dir;
+    }
+
+    public static String get_http_server() {
+        return DfsConfig._http_server;
+    }
+
+    public static void set_http_server(String _http_server) {
+        DfsConfig._http_server = _http_server;
     }
 }

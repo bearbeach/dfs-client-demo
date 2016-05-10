@@ -53,6 +53,13 @@
 							</xsd:documentation>
 						</xsd:annotation>
 					</xsd:attribute>
+					<xsd:attribute name="httpServer" type="xsd:string" use="optional">
+						<xsd:annotation>
+							<xsd:documentation>
+								<![CDATA[ DFS HTTP 下载服务地址, 生产:http://222.73.110.135:8888 ]]>
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
 					<xsd:attribute name="secretKey" type="xsd:string" use="optional" default="1qazXsw28080">
 						<xsd:annotation>
 							<xsd:documentation>

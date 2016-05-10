@@ -39,7 +39,7 @@ public class FastDFSUtil {
     /** 有界阻塞队列 */
     public static BlockingQueue<String> connectQueue = new LinkedBlockingQueue<String>(20);
 
-    private static String [] trackerAddress;
+    private static String httpServer;
 
     /**
      * 初始化DFS配置
@@ -282,17 +282,6 @@ public class FastDFSUtil {
      */
     public static String getDownloadUrl(String dfsGroup, String dfsPath) {
 
-        if(trackerAddress == null){
-            String [] trackers = DfsConfig.get_tracker_adds().split(",");
-            trackerAddress = new String[trackers.length];
-            int position = 0;
-            for(String tracker : trackers){
-                String host = tracker.split(":")[0];
-                trackerAddress[position] = host;
-                position ++;
-            }
-        }
-
         String file_id;
         int ts;
         String token;
@@ -300,7 +289,7 @@ public class FastDFSUtil {
 
         file_id = dfsPath;
 
-        file_url = "http://" + trackerAddress[new Random().nextInt(trackerAddress.length)];
+        file_url = "http://" + DfsConfig.get_http_server();
         if (ClientGlobal.g_tracker_http_port != 80){
             file_url += ":" + ClientGlobal.g_tracker_http_port;
         }

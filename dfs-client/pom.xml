@@ -6,12 +6,12 @@
     <parent>
         <artifactId>dfs-core</artifactId>
         <groupId>com.baofoo</groupId>
-        <version>1.1.1-SNAPSHOT</version>
+        <version>1.2.0</version>
     </parent>
 
     <artifactId>dfs-client</artifactId>
     <packaging>jar</packaging>
-    <version>1.1.1-SNAPSHOT</version>
+    <version>1.2.0</version>
     <name>DFS Core Client</name>
 
     <dependencies>

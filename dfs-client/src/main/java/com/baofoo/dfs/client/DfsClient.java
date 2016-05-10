@@ -487,6 +487,7 @@ public final class DfsClient {
         DfsConfig.set_min_idle(3);
         DfsConfig.set_tracker_adds("10.0.21.130:22122,10.0.21.131:22122,10.0.21.132:22122");
         DfsConfig.set_tracker_http_port(8080);
+        DfsConfig.set_http_server("10.0.21.130");
 
         FastDFSUtil.init();
 

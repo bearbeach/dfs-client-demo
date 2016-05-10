@@ -30,7 +30,9 @@ public class DfsBeanDefinitionParser implements BeanDefinitionParser{
         RootBeanDefinition beanDefinition = new RootBeanDefinition();
 
         String trackers = element.getAttribute("trackers");
+        assert StringUtils.isNotBlank(trackers);
         String zookeeper = element.getAttribute("zookeeper");
+        assert StringUtils.isNotBlank(zookeeper);
 
         int connectTimeout = Integer.valueOf(element.getAttribute("connectTimeout"));
         if(connectTimeout == 0){
@@ -47,10 +49,11 @@ public class DfsBeanDefinitionParser implements BeanDefinitionParser{
             trackerHttpPort = 8080;
         }
 
+        String httpServer = element.getAttribute("httpServer");
+        assert StringUtils.isNotBlank(httpServer);
+
         String secretKey = element.getAttribute("secretKey");
-        if(StringUtils.isBlank(secretKey)){
-            secretKey = "1qazXsw28080";
-        }
+        assert StringUtils.isNotBlank(secretKey);
 
         int maxIdle = Integer.valueOf(element.getAttribute("maxIdle"));
         if(maxIdle == 0){
@@ -70,6 +73,7 @@ public class DfsBeanDefinitionParser implements BeanDefinitionParser{
         DfsConfig.set_zookeeper_address(zookeeper);
         DfsConfig.set_tracker_adds(trackers);
         DfsConfig.set_tracker_http_port(trackerHttpPort);
+        DfsConfig.set_http_server(httpServer);
         DfsConfig.set_min_idle(minIdle);
         DfsConfig.set_max_idle(maxIdle);
         DfsConfig.set_max_total(maxTotal);
@@ -84,6 +88,7 @@ public class DfsBeanDefinitionParser implements BeanDefinitionParser{
         beanDefinition.getPropertyValues().addPropertyValue("zookeeper", zookeeper);
         beanDefinition.getPropertyValues().addPropertyValue("trackers", trackers);
         beanDefinition.getPropertyValues().addPropertyValue("trackerHttpPort", trackerHttpPort);
+        beanDefinition.getPropertyValues().addPropertyValue("httpServer", httpServer);
         beanDefinition.getPropertyValues().addPropertyValue("minIdle", minIdle);
         beanDefinition.getPropertyValues().addPropertyValue("maxIdle", maxIdle);
         beanDefinition.getPropertyValues().addPropertyValue("maxTotal", maxTotal);
