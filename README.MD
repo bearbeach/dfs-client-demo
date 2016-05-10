@@ -63,7 +63,7 @@ DFS-CORE 中主要包含了两个角色 server，client。
 
 ## 最新版本
 
-- 1.1.1-SNAPSHOT 
+- 1.2.0
 
 	1.client及server增加zookeeper断线重连机制，每30秒检查zookeeper连接。上一版本如果服务器网络出现中断等问题会出现client    找不到服务提供者等错误。
 
@@ -80,7 +80,7 @@ DFS-CORE 中主要包含了两个角色 server，client。
 	<dependency>
         <groupId>com.baofoo</groupId>
         <artifactId>dfs-client</artifactId>
-        <version>1.1.1-SNAPSHOT</version>
+        <version>1.2.0</version>
     </dependency>
 
 
@@ -88,13 +88,12 @@ DFS-CORE 中主要包含了两个角色 server，client。
 
 	xmlns:baofoo="http://www.baofoo.com/schema/tags"
 	http://www.baofoo.com/schema/tags
-	http://www.baofoo.com/schema/tags/dfs-1.1.0.xsd
+	http://www.baofoo.com/schema/tags/dfs-1.2.0.xsd
 
 ### Spring 配置
 
-	<!-- zookeeper 服务注册地址，trakers 为DFS tracker server地址，多个用英文逗号隔开，
-		  secretKey为生成下载地址的加密token，不同的fastDFS集群配置不尽相同  -->
-	<baofoo:dfs zookeeper="10.0.20.175:2181" trackers="10.0.21.130:22122" secretKey="1qazXsw28080"/>
+	<!-- zookeeper 服务注册地址，trakers 为DFS tracker server地址，多个用英文逗号隔开，trackerHttpPort 为http服务端口，httpServer为http对外暴漏的负载地址，secretKey为生成下载地址的加密token，不同的fastDFS集群配置不尽相同  -->
+	<baofoo:dfs zookeeper="10.0.20.175:2181" trackers="10.0.21.130:22122,10.0.21.131:22122,10.0.21.132:22122" trackerHttpPort="8080" httpServer="10.0.21.130" secretKey="1qazXsw28080"/>
 
 ### Java Example
 
