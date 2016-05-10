@@ -65,9 +65,7 @@ DFS-CORE 中主要包含了两个角色 server，client。
 
 - 1.2.0
 
-	1.client及server增加zookeeper断线重连机制，每30秒检查zookeeper连接。上一版本如果服务器网络出现中断等问题会出现client    找不到服务提供者等错误。
-
-	2.删除过期文件bug修复，上一版本在分布式部署的情况下会出现多机删除重复记录而产生大量错误（但并不影响正常功能）
+	1.client 端修改配置方式，增加httpServer配置项（dfs 对外暴漏http服务负载地址）。
 
 
 ## 使用帮助
