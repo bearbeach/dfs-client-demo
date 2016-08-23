@@ -63,7 +63,7 @@ DFS-CORE 中主要包含了两个角色 server，client。
 
 ## 最新版本
 
-- 1.2.0
+- 1.2.1
 
 	1.client 端修改配置方式，增加httpServer配置项（dfs 对外暴漏http服务负载地址）。
 
@@ -78,7 +78,7 @@ DFS-CORE 中主要包含了两个角色 server，client。
 	<dependency>
         <groupId>com.baofoo</groupId>
         <artifactId>dfs-client</artifactId>
-        <version>1.2.0</version>
+        <version>1.2.1</version>
     </dependency>
 
 
