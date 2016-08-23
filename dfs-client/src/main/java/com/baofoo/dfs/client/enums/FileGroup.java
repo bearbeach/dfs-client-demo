@@ -21,7 +21,7 @@ public enum FileGroup {
     AUTHENTICATION("AUTHENTICATION","认证文件",0),
 
     /** 理财文件-临时文件(保存5年) **/
-    FINANCE("FINANCE","理财文件",1825);
+    FINANCE("FINANCE","理财文件",1826);
 
 
     private String code;
