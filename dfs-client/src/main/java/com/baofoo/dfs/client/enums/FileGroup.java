@@ -18,7 +18,11 @@ public enum FileGroup {
     PRODUCT("PRODUCT","产品文件",0),
 
     /** 认证文件-永久存放 */
-    AUTHENTICATION("AUTHENTICATION","认证文件",0);
+    AUTHENTICATION("AUTHENTICATION","认证文件",0),
+
+    /** 理财文件-临时文件(保存5年) **/
+    FINANCE("FINANCE","理财文件",1825);
+
 
     private String code;
 

@@ -11,14 +11,14 @@
 
     <artifactId>dfs-server</artifactId>
     <packaging>war</packaging>
-    <version>1.2.0</version>
+    <version>1.2.1</version>
     <name>DFS Core Server</name>
 
     <dependencies>
         <dependency>
             <groupId>com.baofoo</groupId>
             <artifactId>dfs-client</artifactId>
-            <version>1.2.0</version>
+            <version>1.2.1</version>
         </dependency>
         <dependency>
             <groupId>joda-time</groupId>
