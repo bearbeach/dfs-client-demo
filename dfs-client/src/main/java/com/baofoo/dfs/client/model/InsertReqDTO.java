@@ -1,5 +1,6 @@
 package com.baofoo.dfs.client.model;
 
+import com.baofoo.dfs.client.enums.FileGroup;
 import com.google.common.base.Objects;
 
 import java.util.Date;
@@ -38,12 +39,20 @@ public class InsertReqDTO extends CommandDTO {
     /** 文件大小 */
     private long fileSize;
 
+    /** 保留天数 */
+    private int day;
+
     public String getFileGroup() {
         return fileGroup;
     }
 
-    public void setFileGroup(String fileGroup) {
-        this.fileGroup = fileGroup;
+    public void setFileGroup(FileGroup fileGroup) {
+        this.fileGroup = fileGroup.getCode();
+        this.day = fileGroup.getDay();
+    }
+
+    public int getDay() {
+        return day;
     }
 
     public String getFilePath() {

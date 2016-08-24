@@ -135,8 +135,8 @@ public final class DfsClient {
 
         insertReqDTO.setOperation(Operation.INSERT);
 
-        if(FileGroup.valueOf(insertReqDTO.getFileGroup()).getDay()>0){
-            insertReqDTO.setDeadline(DateUtil.computeDate(new Date(), FileGroup.valueOf(insertReqDTO.getFileGroup()).getDay()));
+        if(insertReqDTO.getDay()>0){
+            insertReqDTO.setDeadline(DateUtil.computeDate(new Date(), insertReqDTO.getDay()));
         }
 
         CommandResDTO uploadResDTO = new CommandResDTO();
@@ -505,7 +505,7 @@ public final class DfsClient {
         insertReqDTO.setFileSize(0);
         insertReqDTO.setDeadline(DateUtil.computeDate(new Date(), -1));
         insertReqDTO.setRemark("remark");
-        insertReqDTO.setFileGroup(FileGroup.CLEARING.getCode());
+        insertReqDTO.setFileGroup(FileGroup.CLEARING);
         insertReqDTO.setFileDate(fileDate);
         CommandResDTO commandResDTO = DfsClient.upload(in,insertReqDTO);
         log.debug("upload result =:{}", commandResDTO);
