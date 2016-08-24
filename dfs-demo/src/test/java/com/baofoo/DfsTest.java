@@ -2,8 +2,8 @@ package com.baofoo;
 
 import com.baofoo.dfs.client.DfsClient;
 import com.baofoo.dfs.client.enums.FileGroup;
-import com.baofoo.dfs.client.model.CommandResDTO;
 import com.baofoo.dfs.client.model.InsertReqDTO;
+import com.baofoo.dfs.client.model.QueryReqDTO;
 import org.junit.Test;
 
 
@@ -15,24 +15,48 @@ import org.junit.Test;
  */
 public class DfsTest extends BaseTest {
 
+    /**
+     * 上传文件
+     */
     @Test
-    public void insert() {
+    public void upload() {
         InsertReqDTO insertReqDTO = new InsertReqDTO();
-        insertReqDTO.setFilePath("/Users/weiwei/Downloads/dfs引入说明.html");
+        insertReqDTO.setFilePath("/Users/weiwei/Downloads/1.txt");
         insertReqDTO.setOrgCode("orgCode");
-        insertReqDTO.setFileGroup(FileGroup.TRADE_INFO.getCode());
-        insertReqDTO.setFileName("dfs引入说明.html");
-        insertReqDTO.setFileDate("文件日期");
+        insertReqDTO.setFileGroup(FileGroup.FINANCE.getCode());
+        insertReqDTO.setFileName("1.txt");
+        insertReqDTO.setFileDate("2016-08-24");
 
-        CommandResDTO commandResDTO = DfsClient.upload(insertReqDTO);
-        System.out.println("commandResDTO===" + commandResDTO.toString());
+        DfsClient.upload(insertReqDTO);
+    }
 
-//        DesClient.download("M00/00/00/CgAVOVZYFPuAFEQNE8UwY4CYfGg986.zip", "D:\\aaa.zip");
 
+    /**
+     * 下载
+     */
+    @Test
+    public void download() {
+        DfsClient.download("M00/00/00/CgAVOVZYFPuAFEQNE8UwY4CYfGg986.zip", "/Users/weiwei/Downloads/dfs引入说明.html2");
+    }
+
+    /**
+     * 查询下载
+     */
+    @Test
+    public void queryDownload() {
+        QueryReqDTO queryReqDTO = new QueryReqDTO();
+        queryReqDTO.setFileName("1.txt");
+        queryReqDTO.setOrgCode("orgCode");
+        queryReqDTO.setFileDate("2016-08-24");
+        DfsClient.download(queryReqDTO, "/Users/weiwei/Downloads/download");
 //        DfsClient.download("fileName", "123", "2015-11-27", "D:\\test.sql");
+    }
 
-//        Dfselient.download(7L, "D:\\");
-
-//        DfsClient.delete(6L);
+    /**
+     * 删除文件
+     */
+    @Test
+    public void delete() {
+        DfsClient.delete("1.txt","orgCode","2016-08-24");
     }
 }

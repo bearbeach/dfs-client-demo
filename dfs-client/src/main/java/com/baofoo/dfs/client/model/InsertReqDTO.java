@@ -38,6 +38,14 @@ public class InsertReqDTO extends CommandDTO {
     /** 文件大小 */
     private long fileSize;
 
+    public String getFileGroup() {
+        return fileGroup;
+    }
+
+    public void setFileGroup(String fileGroup) {
+        this.fileGroup = fileGroup;
+    }
+
     public String getFilePath() {
         return filePath;
     }
@@ -60,14 +68,6 @@ public class InsertReqDTO extends CommandDTO {
 
     public void setFileName(String fileName) {
         this.fileName = fileName;
-    }
-
-    public String getFileGroup() {
-        return fileGroup;
-    }
-
-    public void setFileGroup(String fileGroup) {
-        this.fileGroup = fileGroup;
     }
 
     public String getFileDate() {
