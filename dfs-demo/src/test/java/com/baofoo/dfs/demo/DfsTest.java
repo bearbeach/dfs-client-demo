@@ -1,11 +1,10 @@
-package com.baofoo;
+package com.baofoo.dfs.demo;
 
 import com.baofoo.dfs.client.DfsClient;
 import com.baofoo.dfs.client.enums.FileGroup;
 import com.baofoo.dfs.client.model.InsertReqDTO;
 import com.baofoo.dfs.client.model.QueryReqDTO;
 import org.junit.Test;
-
 
 /**
  * DfsTest
@@ -49,7 +48,6 @@ public class DfsTest extends BaseTest {
         queryReqDTO.setOrgCode("orgCode");
         queryReqDTO.setFileDate("2016-08-24");
         DfsClient.download(queryReqDTO, "/Users/weiwei/Downloads/download");
-//        DfsClient.download("fileName", "123", "2015-11-27", "D:\\test.sql");
     }
 
     /**

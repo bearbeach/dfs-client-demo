@@ -1,4 +1,4 @@
-package com.baofoo;
+package com.baofoo.dfs.demo;
 
 import junit.framework.TestCase;
 import org.junit.runner.RunWith;

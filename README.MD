@@ -63,7 +63,8 @@ DFS-CORE 中主要包含了两个角色 server，client。
 
 ## 最新版本
 
-- 1.2.1
+- 5.0.0
+- jdk 1.8
 
 	1.client 端修改配置方式，增加httpServer配置项（dfs 对外暴漏http服务负载地址）。
 
@@ -78,7 +79,7 @@ DFS-CORE 中主要包含了两个角色 server，client。
 	<dependency>
         <groupId>com.baofoo</groupId>
         <artifactId>dfs-client</artifactId>
-        <version>1.2.1</version>
+        <version>5.0.0</version>
     </dependency>
 
 
@@ -91,19 +92,27 @@ DFS-CORE 中主要包含了两个角色 server，client。
 ### Spring 配置
 
 	<!-- zookeeper 服务注册地址，trakers 为DFS tracker server地址，多个用英文逗号隔开，trackerHttpPort 为http服务端口，httpServer为http对外暴漏的负载地址，secretKey为生成下载地址的加密token，不同的fastDFS集群配置不尽相同  -->
-	<baofoo:dfs zookeeper="10.0.20.175:2181" trackers="10.0.21.130:22122,10.0.21.131:22122,10.0.21.132:22122" trackerHttpPort="8080" httpServer="10.0.21.130" secretKey="1qazXsw28080"/>
+	<baofoo:dfs zookeeper="10.0.20.175:2181" trackers="10.0.21.130:22122" trackerHttpPort="8080" httpServer="10.0.21.130" secretKey="1qazXsw28080"/>
 
 ### Java Example
 
-	import com.baofoo.dfs.client.DfsClient
-	
-	DfsClient.upload("F:\\嘉兴拓展.zip","orgCode","9嘉兴拓展.zip","文件分组","文件日期");
+    demo地址:`com.baofoo.dfs.demo.DfsTest`
 
+    .......
+    
+    /**
+     * 上传文件
+     */
+    @Test
+    public void upload() {
+        InsertReqDTO insertReqDTO = new InsertReqDTO();
+        insertReqDTO.setFilePath("/Users/weiwei/Downloads/1.txt");
+        insertReqDTO.setOrgCode("orgCode");
+        insertReqDTO.setFileGroup(FileGroup.FINANCE.getCode());
+        insertReqDTO.setFileName("1.txt");
+        insertReqDTO.setFileDate("2016-08-24");
 
-    DesClient.download("M00/00/00/CgAVOVZYFPuAFEQNE8UwY4CYfGg986.zip","D:\\aaa.zip");
-
-    DfsClient.download("fileName","123","2015-11-27","D:\\test.sql");
-
-    Dfselient.download(7L,"D:\\");
-
-    DfsClient.delete(6L);
+        DfsClient.upload(insertReqDTO);
+    }
+    
+    .....
