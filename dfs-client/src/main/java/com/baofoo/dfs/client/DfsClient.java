@@ -13,11 +13,13 @@ import com.baofoo.dfs.client.util.FileUtil;
 import com.baofoo.dfs.client.util.SocketUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.zookeeper.KeeperException;
-import org.apache.zookeeper.ZooKeeper;
-import org.apache.zookeeper.data.Stat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.io.*;
+
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Date;
 import java.util.Map;
 
@@ -133,8 +135,8 @@ public final class DfsClient {
 
         insertReqDTO.setOperation(Operation.INSERT);
 
-        if(insertReqDTO.getFileGroup().getDay()>0){
-            insertReqDTO.setDeadline(DateUtil.computeDate(new Date(), insertReqDTO.getFileGroup().getDay()));
+        if(FileGroup.valueOf(insertReqDTO.getFileGroup()).getDay()>0){
+            insertReqDTO.setDeadline(DateUtil.computeDate(new Date(), FileGroup.valueOf(insertReqDTO.getFileGroup()).getDay()));
         }
 
         CommandResDTO uploadResDTO = new CommandResDTO();
@@ -503,7 +505,7 @@ public final class DfsClient {
         insertReqDTO.setFileSize(0);
         insertReqDTO.setDeadline(DateUtil.computeDate(new Date(), -1));
         insertReqDTO.setRemark("remark");
-        insertReqDTO.setFileGroup(FileGroup.CLEARING);
+        insertReqDTO.setFileGroup(FileGroup.CLEARING.getCode());
         insertReqDTO.setFileDate(fileDate);
         CommandResDTO commandResDTO = DfsClient.upload(in,insertReqDTO);
         log.debug("upload result =:{}", commandResDTO);

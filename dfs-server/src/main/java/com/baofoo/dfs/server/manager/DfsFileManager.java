@@ -2,7 +2,6 @@ package com.baofoo.dfs.server.manager;
 
 import com.baofoo.dfs.client.core.DfsException;
 import com.baofoo.dfs.client.enums.ErrorCode;
-import com.baofoo.dfs.client.enums.Operation;
 import com.baofoo.dfs.client.model.*;
 import com.baofoo.dfs.server.dal.mapper.DfsNormalFileMapper;
 import com.baofoo.dfs.server.dal.mapper.DfsTempFileMapper;
@@ -47,7 +46,7 @@ public class DfsFileManager {
                 normalFileDO.setFileName(insertReqDTO.getFileName());
                 normalFileDO.setRemark(insertReqDTO.getRemark());
                 normalFileDO.setFileDate(insertReqDTO.getFileDate());
-                normalFileDO.setFileGroup(insertReqDTO.getFileGroup().getCode());
+                normalFileDO.setFileGroup(insertReqDTO.getFileGroup());
                 int insertRows = normalFileMapper.insert(normalFileDO);
                 if(insertRows != 1){
                     throw new DfsException(ErrorCode.SAVE_UPLOAD_INFO_ERROR);
@@ -64,7 +63,7 @@ public class DfsFileManager {
             tempFileDO.setRemark(insertReqDTO.getRemark());
             tempFileDO.setFileDate(insertReqDTO.getFileDate());
             tempFileDO.setDeadline(insertReqDTO.getDeadline());
-            tempFileDO.setFileGroup(insertReqDTO.getFileGroup().getCode());
+            tempFileDO.setFileGroup(insertReqDTO.getFileGroup());
 
             int insertRows = tempFileMapper.insert(tempFileDO);
             if(insertRows != 1){

@@ -7,7 +7,7 @@
 
     <groupId>com.baofoo</groupId>
     <artifactId>dfs-core</artifactId>
-    <version>1.2.0</version>
+    <version>5.0.0</version>
 
     <packaging>pom</packaging>
     <name>DFS Core Parent</name>
@@ -15,10 +15,11 @@
     <modules>
         <module>dfs-server</module>
         <module>dfs-client</module>
+        <module>dfs-demo</module>
     </modules>
 
     <properties>
-        <java.version>1.6</java.version>
+        <java.version>1.8</java.version>
         <java.encoding>UTF-8</java.encoding>
         <maven.compiler.version>3.1</maven.compiler.version>
         <mysql.version>5.1.34</mysql.version>
