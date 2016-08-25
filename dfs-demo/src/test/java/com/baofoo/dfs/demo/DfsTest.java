@@ -22,7 +22,7 @@ public class DfsTest extends BaseTest {
         InsertReqDTO insertReqDTO = new InsertReqDTO();
         insertReqDTO.setFilePath("/Users/weiwei/Downloads/1.txt");
         insertReqDTO.setOrgCode("orgCode");
-        insertReqDTO.setFileGroup(FileGroup.FINANCE.getCode());
+        insertReqDTO.setFileGroup(FileGroup.FINANCE);
         insertReqDTO.setFileName("1.txt");
         insertReqDTO.setFileDate("2016-08-24");
 

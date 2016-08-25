@@ -37,9 +37,7 @@ public class DfsHandler implements Runnable {
         ObjectOutputStream oot = null;
 
         Response<Object> response = new Response<Object>();
-
         try {
-
             oin = new ObjectInputStream(socket.getInputStream());
             oot = new ObjectOutputStream(socket.getOutputStream());
 
@@ -77,8 +75,14 @@ public class DfsHandler implements Runnable {
     }
 
     private Long insert(CommandDTO command){
-        InsertReqDTO insertReqDTO = (InsertReqDTO)command;
-        return dfsFileManager.insert(insertReqDTO);
+        if(command instanceof InsertReqSTO){
+            InsertReqSTO insertReqSTO = (InsertReqSTO)command;
+            return dfsFileManager.insert(insertReqSTO);
+        }else{
+            InsertReqDTO insertReqDTO = (InsertReqDTO)command;
+            return dfsFileManager.insert(insertReqDTO);
+        }
+
     }
 
     /**

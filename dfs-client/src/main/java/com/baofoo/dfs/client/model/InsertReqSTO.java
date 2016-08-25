@@ -1,6 +1,5 @@
 package com.baofoo.dfs.client.model;
 
-import com.baofoo.dfs.client.enums.FileGroup;
 import com.google.common.base.Objects;
 
 import java.util.Date;
@@ -11,7 +10,7 @@ import java.util.Date;
  * @author 牧之
  * @version 1.0.0 createTime: 2015/12/2
  */
-public class InsertReqDTO extends CommandDTO {
+public class InsertReqSTO extends CommandDTO {
 
     private static final long serialVersionUID = -5099591007208731582L;
 
@@ -25,7 +24,7 @@ public class InsertReqDTO extends CommandDTO {
     private String fileName;
 
     /** 源文件组 */
-    private FileGroup fileGroup;
+    private String fileGroup;
 
     /** 源文件创建日期 */
     private String fileDate;
@@ -39,13 +38,14 @@ public class InsertReqDTO extends CommandDTO {
     /** 文件大小 */
     private long fileSize;
 
-    public FileGroup getFileGroup() {
+    public String getFileGroup() {
         return fileGroup;
     }
 
-    public void setFileGroup(FileGroup fileGroup) {
+    public void setFileGroup(String fileGroup) {
         this.fileGroup = fileGroup;
     }
+
 
     public String getFilePath() {
         return filePath;

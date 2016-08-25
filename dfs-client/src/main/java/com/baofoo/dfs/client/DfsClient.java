@@ -135,8 +135,8 @@ public final class DfsClient {
 
         insertReqDTO.setOperation(Operation.INSERT);
 
-        if(insertReqDTO.getDay()>0){
-            insertReqDTO.setDeadline(DateUtil.computeDate(new Date(), insertReqDTO.getDay()));
+        if(insertReqDTO.getFileGroup().getDay()>0){
+            insertReqDTO.setDeadline(DateUtil.computeDate(new Date(), insertReqDTO.getFileGroup().getDay()));
         }
 
         CommandResDTO uploadResDTO = new CommandResDTO();

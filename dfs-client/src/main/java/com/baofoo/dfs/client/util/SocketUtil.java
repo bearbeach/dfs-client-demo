@@ -3,8 +3,10 @@ package com.baofoo.dfs.client.util;
 import com.baofoo.Response;
 import com.baofoo.dfs.client.core.DfsConfig;
 import com.baofoo.dfs.client.core.DfsException;
-import com.baofoo.dfs.client.zookeeper.DfsServerManager;
 import com.baofoo.dfs.client.enums.ErrorCode;
+import com.baofoo.dfs.client.model.InsertReqDTO;
+import com.baofoo.dfs.client.model.InsertReqSTO;
+import com.baofoo.dfs.client.zookeeper.DfsServerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -143,7 +145,26 @@ public class SocketUtil {
 
         Response response = null;
 
+        InsertReqSTO reqSTO = null;
+
         try {
+
+            if (command.getClass().getName().equals("com.baofoo.dfs.client.model.InsertReqDTO")) {
+
+                InsertReqDTO dto = (InsertReqDTO)command;
+                reqSTO = new InsertReqSTO();
+                reqSTO.setDeadline(dto.getDeadline());
+                reqSTO.setFileName(dto.getFileName());
+                reqSTO.setFileDate(dto.getFileDate());
+                reqSTO.setFilePath(dto.getFilePath());
+                reqSTO.setOrgCode(dto.getOrgCode());
+                reqSTO.setFileSize(dto.getFileSize());
+                reqSTO.setRemark(dto.getRemark());
+                reqSTO.setOperation(dto.getOperation());
+                reqSTO.setFileGroup(dto.getFileGroup().getCode());
+
+                command = reqSTO;
+            }
 
             socket = SocketUtil.getSocketConnection();
             oot = new ObjectOutputStream(socket.getOutputStream());

@@ -46,7 +46,7 @@ public class DfsFileManager {
                 normalFileDO.setFileName(insertReqDTO.getFileName());
                 normalFileDO.setRemark(insertReqDTO.getRemark());
                 normalFileDO.setFileDate(insertReqDTO.getFileDate());
-                normalFileDO.setFileGroup(insertReqDTO.getFileGroup());
+                normalFileDO.setFileGroup(insertReqDTO.getFileGroup().getCode());
                 int insertRows = normalFileMapper.insert(normalFileDO);
                 if(insertRows != 1){
                     throw new DfsException(ErrorCode.SAVE_UPLOAD_INFO_ERROR);
@@ -63,7 +63,55 @@ public class DfsFileManager {
             tempFileDO.setRemark(insertReqDTO.getRemark());
             tempFileDO.setFileDate(insertReqDTO.getFileDate());
             tempFileDO.setDeadline(insertReqDTO.getDeadline());
-            tempFileDO.setFileGroup(insertReqDTO.getFileGroup());
+            tempFileDO.setFileGroup(insertReqDTO.getFileGroup().getCode());
+
+            int insertRows = tempFileMapper.insert(tempFileDO);
+            if(insertRows != 1){
+                throw new DfsException(ErrorCode.SAVE_UPLOAD_INFO_ERROR);
+            }
+
+            return tempFileDO.getId();
+
+        }catch (DuplicateKeyException e){
+            log.error(e.getMessage(),e);
+            throw new DfsException(ErrorCode.FILE_EXITED);
+        }
+    }
+
+    /**
+     * 新增DFS 文件记录信息
+     * 新功能
+     *
+     * @param insertReqSTO   Socket 命令请求对象
+     * @return               文件记录ID
+     */
+    public Long insert(InsertReqSTO insertReqSTO){
+        try{
+            if(insertReqSTO.getDeadline() == null){
+                DFSNormalFileDO normalFileDO = new DFSNormalFileDO();
+                normalFileDO.setFileSize(insertReqSTO.getFileSize());
+                normalFileDO.setOrgCode(insertReqSTO.getOrgCode());
+                normalFileDO.setFileName(insertReqSTO.getFileName());
+                normalFileDO.setRemark(insertReqSTO.getRemark());
+                normalFileDO.setFileDate(insertReqSTO.getFileDate());
+                normalFileDO.setFileGroup(insertReqSTO.getFileGroup());
+                int insertRows = normalFileMapper.insert(normalFileDO);
+                if(insertRows != 1){
+                    throw new DfsException(ErrorCode.SAVE_UPLOAD_INFO_ERROR);
+                }
+
+                return normalFileDO.getId();
+            }
+
+
+            DFSTempFileDO tempFileDO = new DFSTempFileDO();
+            tempFileDO.setFileSize(insertReqSTO.getFileSize());
+            tempFileDO.setOrgCode(insertReqSTO.getOrgCode());
+            tempFileDO.setFileName(insertReqSTO.getFileName());
+            tempFileDO.setRemark(insertReqSTO.getRemark());
+            tempFileDO.setFileDate(insertReqSTO.getFileDate());
+            tempFileDO.setDeadline(insertReqSTO.getDeadline());
+            tempFileDO.setFileGroup(insertReqSTO.getFileGroup());
 
             int insertRows = tempFileMapper.insert(tempFileDO);
             if(insertRows != 1){
