@@ -1,5 +1,6 @@
 package com.baofoo.dfs.client.schema;
 
+import com.baofoo.dfs.client.core.RegistryConfig;
 import org.springframework.beans.factory.xml.NamespaceHandlerSupport;
 
 /**
@@ -13,7 +14,7 @@ public class DfsNamespaceHandler extends NamespaceHandlerSupport {
 
     @Override
     public void init() {
-        this.registerBeanDefinitionParser("dfs", new DfsBeanDefinitionParser());
+        this.registerBeanDefinitionParser("dfs", new DfsBeanDefinitionParser(RegistryConfig.class));
     }
 
 }

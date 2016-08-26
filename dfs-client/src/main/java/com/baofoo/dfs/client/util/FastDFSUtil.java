@@ -37,9 +37,7 @@ public class FastDFSUtil {
     public static final String KEY_REMOTE_FILE_NAME = "REMOTE_FILE_NAME";
 
     /** 有界阻塞队列 */
-    public static BlockingQueue<String> connectQueue = new LinkedBlockingQueue<String>(20);
-
-    private static String httpServer;
+    private static BlockingQueue<String> connectQueue = new LinkedBlockingQueue<String>(20);
 
     /**
      * 初始化DFS配置

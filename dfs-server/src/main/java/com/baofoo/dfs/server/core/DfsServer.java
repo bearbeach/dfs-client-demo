@@ -24,7 +24,7 @@ import java.net.Socket;
 public class DfsServer {
 
     /** DFS 服务 socket 端口 */
-    @Value(value = "#{app.dfsServerPort}")
+    @Value(value = "${dfsServerPort}")
     private int _dfs_server_port;
 
     /** DFS 文件记录管理接口 */

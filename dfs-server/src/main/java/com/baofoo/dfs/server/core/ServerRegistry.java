@@ -23,11 +23,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class ServerRegistry implements Watcher{
 
-    @Value(value = "#{app.zookeeperAddress}")
+    @Value(value = "${zookeeperAddress}")
     private String _zookeeper_address;
 
     /** DFS 服务 socket 端口 */
-    @Value(value = "#{app.dfsServerPort}")
+    @Value(value = "${dfsServerPort}")
     private int _dfs_server_port;
 
     private final static String ROOT_PATH = "/dfsCoreRoot";
