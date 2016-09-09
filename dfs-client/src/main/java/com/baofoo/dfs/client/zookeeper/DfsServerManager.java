@@ -129,7 +129,7 @@ public class DfsServerManager extends ZooKeeperOperator implements Watcher {
      */
     @Override
     public void process(WatchedEvent event) {
-        log.debug("event :{},{},{}",event.getPath(),event.getType(),event.getState());
+        log.warn("event :{},{},{}",event.getPath(),event.getType(),event.getState());
         if (event.getType() == Event.EventType.NodeChildrenChanged
                 && (SERVER_PATH).equals(event.getPath())){
             updateServerList();
@@ -161,7 +161,7 @@ public class DfsServerManager extends ZooKeeperOperator implements Watcher {
     }
 
     public static void main(String args[]) throws InterruptedException {
-        DfsServerManager serverManager = new DfsServerManager("192.168.190.13:2181");
+        DfsServerManager serverManager = new DfsServerManager("10.0.20.175:2181");
         serverManager.getServerList();
 
         for (int i = 0 ; i < 100; i ++){
