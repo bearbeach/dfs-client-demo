@@ -24,7 +24,7 @@ public class DfsTest extends BaseTest {
         insertReqDTO.setOrgCode("orgCode");
         insertReqDTO.setFileGroup(FileGroup.TRADE_INFO);
         insertReqDTO.setFileName("1.txt");
-        insertReqDTO.setFileDate("2016-09-21");
+        insertReqDTO.setFileDate("2016-11-17");
 
         DfsClient.upload(insertReqDTO);
     }
@@ -37,25 +37,49 @@ public class DfsTest extends BaseTest {
         QueryReqDTO queryReqDTO = new QueryReqDTO();
         queryReqDTO.setFileName("1.txt");
         queryReqDTO.setOrgCode("orgCode");
-        queryReqDTO.setFileDate("2016-09-21");
+        queryReqDTO.setFileDate("2016-11-17");
         String url = DfsClient.getDownloadUri(queryReqDTO);
         System.out.println("url:" + url);
     }
 
 
+    /**
+     * 查询下载地址
+     */
     @Test
     public void queryDfsUrl2() {
         String group = FileGroup.TRADE_INFO.getCode();
-        String dfs_path = "/Users/weiwei/Downloads/1.tx";
+        String dfs_path = "/Users/weiwei/Downloads/1.txt";
         String url = DfsClient.getDownloadUri(group, dfs_path);
         System.out.println("url:" + url);
+    }
+
+    /**
+     * 通过fileId获取地址
+     */
+    @Test
+    public void queryDfsUrlByFileId() {
+        QueryReqDTO queryReqDTO = new QueryReqDTO();
+        queryReqDTO.setFileId(50005417L);
+        String url = DfsClient.getDownloadUri(queryReqDTO);
+        System.out.println("url:" + url);
+    }
+
+    /**
+     * 通过fileId下载
+     */
+    @Test
+    public void download() {
+        QueryReqDTO queryReqDTO = new QueryReqDTO();
+        queryReqDTO.setFileId(50005417L);
+        DfsClient.download(queryReqDTO, "/Users/weiwei/Downloads/test/");
     }
 
     /**
      * 下载
      */
     @Test
-    public void download() {
+    public void downloadByFileID() {
         DfsClient.download("M00/00/00/CgAVOVZYFPuAFEQNE8UwY4CYfGg986.zip", "/Users/weiwei/Downloads/dfs引入说明.html2");
     }
 
@@ -76,6 +100,6 @@ public class DfsTest extends BaseTest {
      */
     @Test
     public void delete() {
-        DfsClient.delete("1.txt", "orgCode", "2016-08-24");
+        DfsClient.delete("1.txt", "orgCode", "2016-11-17");
     }
 }

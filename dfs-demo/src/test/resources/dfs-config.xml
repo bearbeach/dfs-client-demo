@@ -8,11 +8,11 @@
        http://www.baofoo.com/schema/tags/dfs-1.2.0.xsd">
 
     <!--&lt;!&ndash; zookeeper 服务注册地址，trakers 为DFS tracker server地址，多个用英文逗号隔开，trackerHttpPort 为http服务端口，httpServer为http对外暴漏的负载地址，secretKey为生成下载地址的加密token，不同的fastDFS集群配置不尽相同  &ndash;&gt;-->
-    <!--<baofoo:dfs zookeeper="10.0.20.175:2181" trackers="10.0.21.130:22122"-->
-                <!--trackerHttpPort="8080" httpServer="10.0.21.130" secretKey="1qazXsw28080"/> -->
+    <baofoo:dfs zookeeper="10.0.20.175:2181" trackers="10.0.21.130:22122"
+                trackerHttpPort="8080" httpServer="10.0.21.130" secretKey="1qazXsw28080"/>
 
     <!-- zookeeper 服务注册地址，trakers 为DFS tracker server地址，多个用英文逗号隔开，trackerHttpPort 为http服务端口，httpServer为http对外暴漏的负载地址，secretKey为生成下载地址的加密token，不同的fastDFS集群配置不尽相同  -->
-    <baofoo:dfs zookeeper="192.168.190.11:2181" trackers="192.168.190.33:22122,192.168.190.32:22122,192.168.190.31:22122"
-                trackerHttpPort="80" httpServer="192.168.190.31" secretKey="FastDFS-BAOFOO-20151203"/>
+    <!--<baofoo:dfs zookeeper="192.168.190.11:2181" trackers="192.168.190.33:22122,192.168.190.32:22122,192.168.190.31:22122"-->
+                <!--trackerHttpPort="80" httpServer="192.168.190.31" secretKey="FastDFS-BAOFOO-20151203"/>-->
 
 </beans>
