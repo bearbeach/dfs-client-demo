@@ -24,8 +24,10 @@ public enum FileGroup {
     FINANCE("FINANCE","理财文件",1826),
 
     /** 惠生钱-永久存放 **/
-    HSQ_INDIVIDUAL("HSQ_INDIVIDUAL","慧省钱人脸照片",0);
+    HSQ_INDIVIDUAL("HSQ_INDIVIDUAL","慧省钱人脸照片",0),
 
+    /** 银行对账文件-临时文件(保存5年) **/
+    BANK_VERIFY("BANK_VERIFY","渠道对账文件",1826);
 
     private String code;
 
