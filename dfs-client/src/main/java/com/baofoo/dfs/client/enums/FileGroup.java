@@ -27,7 +27,10 @@ public enum FileGroup {
     HSQ_INDIVIDUAL("HSQ_INDIVIDUAL","慧省钱人脸照片",0),
 
     /** 银行对账文件-临时文件(保存5年) **/
-    BANK_VERIFY("BANK_VERIFY","渠道对账文件",1826);
+    BANK_VERIFY("BANK_VERIFY","渠道对账文件",1826),
+
+    /** 商户对账文件-临时文件(保存1年) **/
+    MERCHANT_VERIFY("MERCHANT_VERIFY","商户对账文件",360);
 
     private String code;
 
