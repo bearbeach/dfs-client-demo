@@ -24,7 +24,7 @@ public class DfsTest extends BaseTest {
         insertReqDTO.setOrgCode("orgCode");
         insertReqDTO.setFileGroup(FileGroup.TRADE_INFO);
         insertReqDTO.setFileName("1.txt");
-        insertReqDTO.setFileDate("2016-11-17");
+        insertReqDTO.setFileDate("2016-11-15");
 
         DfsClient.upload(insertReqDTO);
     }
@@ -60,7 +60,7 @@ public class DfsTest extends BaseTest {
     @Test
     public void queryDfsUrlByFileId() {
         QueryReqDTO queryReqDTO = new QueryReqDTO();
-        queryReqDTO.setFileId(50005417L);
+        queryReqDTO.setFileId(50005561L);
         String url = DfsClient.getDownloadUri(queryReqDTO);
         System.out.println("url:" + url);
     }
@@ -71,7 +71,7 @@ public class DfsTest extends BaseTest {
     @Test
     public void download() {
         QueryReqDTO queryReqDTO = new QueryReqDTO();
-        queryReqDTO.setFileId(50005417L);
+        queryReqDTO.setFileId(50005561L);
         DfsClient.download(queryReqDTO, "/Users/weiwei/Downloads/test/");
     }
 
@@ -80,7 +80,7 @@ public class DfsTest extends BaseTest {
      */
     @Test
     public void downloadByFileID() {
-        DfsClient.download("M00/00/00/CgAVOVZYFPuAFEQNE8UwY4CYfGg986.zip", "/Users/weiwei/Downloads/dfs引入说明.html2");
+        DfsClient.download("M00/00/33/CgAVg1gq222AR_7HAAApAWGBLM8206.txt", "/Users/weiwei/Downloads/test/dfs引入说明.html2");
     }
 
     /**
