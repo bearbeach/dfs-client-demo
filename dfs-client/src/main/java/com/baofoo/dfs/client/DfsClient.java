@@ -142,6 +142,7 @@ public final class DfsClient {
         CommandResDTO uploadResDTO = new CommandResDTO();
 
         try{
+            FastDFSUtil.putQueue(insertReqDTO.getFilePath());
 
             File file = new File(insertReqDTO.getFilePath());
             if(!file.exists()){
@@ -149,7 +150,6 @@ public final class DfsClient {
             }
 
             insertReqDTO.setFileSize(file.length());
-            FastDFSUtil.putQueue(insertReqDTO.getFilePath());
 
             // 第一步、新增DFS文件记录信息（重复校验）
             Response response = SocketUtil.sendMessage(insertReqDTO);

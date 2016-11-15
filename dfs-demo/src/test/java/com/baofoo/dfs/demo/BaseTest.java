@@ -13,7 +13,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * @since 1.7
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:dfs-config.xml")
+@ContextConfiguration(locations = "classpath:applicationContext.xml")
 public abstract class BaseTest extends TestCase {
 
 }

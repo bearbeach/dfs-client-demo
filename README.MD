@@ -79,7 +79,7 @@ DFS-CORE 中主要包含了两个角色 server，client。
 	<dependency>
         <groupId>com.baofoo</groupId>
         <artifactId>dfs-client</artifactId>
-        <version>5.0.0</version>
+        <version>2.0.3</version>
     </dependency>
 
 
