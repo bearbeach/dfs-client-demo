@@ -30,7 +30,13 @@ public enum FileGroup {
     BANK_VERIFY("BANK_VERIFY","渠道对账文件",1826),
 
     /** 商户对账文件-临时文件(保存1年) **/
-    MERCHANT_VERIFY("MERCHANT_VERIFY","商户对账文件",360);
+    MERCHANT_VERIFY("MERCHANT_VERIFY","商户对账文件",360),
+
+    /** 漫道资管-永久 **/
+    MANDAO_ASSET("MANDAO-ASSET","商户对账文件",0),
+
+    /** 漫道资管-临时文件(保存30天) **/
+    MANDAO_ASSET_TMP("MANDAO-ASSET-TMP","商户对账文件",30);
 
     private String code;
 
