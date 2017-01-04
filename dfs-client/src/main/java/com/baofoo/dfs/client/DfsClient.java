@@ -480,6 +480,76 @@ public final class DfsClient {
     }
 
     /**
+     * 下载字节文件
+     *
+     * @param dfsGroupName DFS 文件服务器组
+     * @param dfsPath      DFS文件地址
+     * @return 返回字节信息
+     */
+    public static byte[] downloadByte(String dfsGroupName, String dfsPath) {
+
+        if (StringUtils.isBlank(dfsGroupName)) {
+            throw new DfsException(ErrorCode.INVALID_PARAM, "DFS 文件组不能为空!");
+        }
+        if (StringUtils.isBlank(dfsPath)) {
+            throw new DfsException(ErrorCode.INVALID_PARAM, "DFS 文件路径不能为空!");
+        }
+        try {
+
+            FastDFSUtil.putQueue(dfsPath);
+
+            //直接从DFS 下载文件到本地
+            byte[] result = FastDFSUtil.downloadByte(dfsGroupName, dfsPath);
+
+            if (result == null || result.length == 0) {
+                throw new DfsException(ErrorCode.DOWNLOAD_FAILURE);
+            }
+
+            log.debug("文件，组：{}，文件地址：{},下载成功，", dfsGroupName, dfsPath);
+            return result;
+        } catch (DfsException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new DfsException(ErrorCode.SYSTEM_ERROR, e.getMessage());
+        } finally {
+            FastDFSUtil.takeQueue();
+        }
+    }
+
+    /**
+     * 下载文件
+     * <p>
+     * <p>文件ID与（文件名，机构代码，文件日期）不能同时为空</p>
+     *
+     * @param reqDTO 下载请求model
+     */
+    public static byte[] downloadByte(QueryReqDTO reqDTO) {
+
+        if (reqDTO.getFileId() == null || reqDTO.getFileId() < 1) {
+
+            if (StringUtils.isBlank(reqDTO.getFileName())) {
+                throw new DfsException(ErrorCode.INVALID_PARAM, "文件名不能为空!");
+            }
+            if (StringUtils.isBlank(reqDTO.getOrgCode())) {
+                throw new DfsException(ErrorCode.INVALID_PARAM, "机构代码不能为空!");
+            }
+            if (StringUtils.isBlank(reqDTO.getFileDate())) {
+                throw new DfsException(ErrorCode.INVALID_PARAM, "文件日期不能为空!");
+            }
+        }
+        reqDTO.setOperation(Operation.QUERY);
+        //第一步、根据文件记录ID获取DFS文件存放信息
+        Response response = SocketUtil.sendMessage(reqDTO);
+        if (!response.isSuccess()) {
+            throw new DfsException(ErrorCode.GET_FILE_INFO_ERROR, response.getErrorMsg());
+        }
+        CommandResDTO resDTO = (CommandResDTO) response.getResult();
+
+        return downloadByte(resDTO.getDfsGroup(), resDTO.getDfsPath());
+
+    }
+
+    /**
      * 删除DFS 文件
      *
      * @param fileId 文件记录ID

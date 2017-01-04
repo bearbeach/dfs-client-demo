@@ -135,6 +135,32 @@ public class FastDFSUtil {
     /**
      * 下载文件
      *
+     * @param dfsPath      DFS 路径
+     * @param dfsGroupName DFS文件组
+     * @return byte[]              文件下载结果
+     */
+    public static byte[] downloadByte(String dfsGroupName, String dfsPath) {
+
+        TrackerServer trackerServer = null;
+        try {
+            trackerServer = pool.borrowObject();
+            StorageClient storageClient = new StorageClient(trackerServer, null);
+            // 下载文件
+            byte[] bytes = storageClient.download_file(dfsGroupName, dfsPath);
+
+            log.debug("download result:remoteFilename: {}, dfsGroup: {}", dfsPath, dfsGroupName);
+            return bytes;
+        } catch (Exception e) {
+            log.error("下载文件失败,remoteFilename:{},dfsGroup:{},{}", dfsPath, e.getMessage(), e);
+            throw new DfsException(ErrorCode.SYSTEM_ERROR, e.getMessage());
+        } finally {
+            closeTrackerServer(trackerServer);
+        }
+    }
+
+    /**
+     * 下载文件
+     *
      * @param groupName      下载组，默认为Group1
      * @param remoteFilename DFS上面的文件名
      * @param localFileName  下载到本地的文件名
